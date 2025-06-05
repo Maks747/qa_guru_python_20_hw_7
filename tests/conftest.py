@@ -1,6 +1,8 @@
 import os
+import shutil
 import zipfile
 import pytest
+
 
 from script_os import FILES_DIR, ZIP_DIR, ARCHIVE_DIR
 
@@ -10,3 +12,5 @@ def create_archive():
         os.mkdir(ARCHIVE_DIR)  # создаем папку если её нет
         with zipfile.ZipFile(ZIP_DIR, 'w') as zf:  # создаем архив
             for file in os.listdir(FILES_DIR): zf.write(os.path.join(FILES_DIR, file), file) # добавляем файлы в архив
+    yield
+    shutil.rmtree(ARCHIVE_DIR)
